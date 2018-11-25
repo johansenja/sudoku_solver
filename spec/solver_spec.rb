@@ -12,21 +12,31 @@ S = Sudoku.new([8, 7, 6,  9, 0, 0,  0, 0, 0,
                 0, 0, 4,  6, 9, 0,  1, 7, 3,
                 0, 0, 0,  0, 0, 1,  0, 0, 4])
 
-S2 = Sudoku.new([1, 5, 2,  4, 0, 9,  3, 7, 6,
+S2 = Sudoku.new([1, 5, 2,  4, 8, 9,  3, 7, 6,
                  7, 0, 9,  2, 5, 6,  0, 4, 1,
                  4, 6, 8,  3, 7, 1,  2, 9, 5,
 
                  3, 8, 7,  1, 2, 4,  6, 5, 9,
                  5, 9, 1,  7, 6, 3,  4, 0, 8,
-                 2, 4, 6,  8, 9, 5,  7, 1, 3,
+                 2, 4, 6,  8, 9, 0,  7, 1, 3,
 
                  9, 1, 4,  0, 3, 7,  5, 8, 2,
                  0, 2, 5,  9, 4, 8,  1, 3, 7,
                  8, 7, 3,  5, 1, 2,  0, 6, 4])
 
+describe '#zeroes' do
+  it 'should return a hash of the squares to be filled, with their indices' do
+    expect(S2.zeroes).to have_key(10)
+  end
+end
+
 describe '#number_can_go_in_square?' do
-  it 'should allow a number to go in the square if it is already in that box' do
+  it 'should allow a number to go in the square unless already in that box' do
     expect(S.number_can_go_in_square?(6, 1, 0, 0)).to eq false
+  end
+
+  it 'should allow a number to go in the square if not elsewhere' do
+    expect(S2.number_can_go_in_square?(5, 5, 5, 4)).to eq true
   end
 end
 

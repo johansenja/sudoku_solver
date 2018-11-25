@@ -1,7 +1,14 @@
+require 'pry-byebug'
 class Sudoku
   def initialize(grid)
     @grid = grid
     @possible_numbers = (1..9).to_a
+  end
+
+  def zeroes
+    h = {}
+    @grid.each_with_index { |e, i| h[i] = e if e.zero? }
+    return h
   end
 
   def row(row_index)
@@ -36,16 +43,16 @@ class Sudoku
   def fill_square(index, r, c, b)
     @possible_numbers.each do |n|
       @grid[index] = n if number_can_go_in_square?(n, r, c, b)
+      return unless @grid[index].zero?
     end
   end
 
   def solve
-    @grid.each_with_index do |square, index|
+    zeroes.each do |index, _value|
       r = index / 9
       c = index % 9
       b = ((index - (index % 3) - (9 * (r % 3))) / 9) + c / 3
-      fill_square(index, r, c, b) if square.zero?
+      fill_square(index, r, c, b)
     end
-    p @grid
   end
 end
