@@ -17,7 +17,7 @@ class Sudoku
 
   def box(box_index)
     start = (3 * (box_index % 3)) + ((27 * box_index / 3) *
-            (box_index - (box_index % 3)) / 3)
+            box_index / 3)
     @grid.select.with_index do |num, index|
       num if index == start || index == start + 1 || index == start + 2 ||
              index == start + 9 || index == start + 10 || index == start + 11 ||
@@ -41,10 +41,11 @@ class Sudoku
 
   def solve
     @grid.each_with_index do |square, index|
-      r = (index - (index % 9)) / 9
+      r = index / 9
       c = index % 9
-      b = 1
+      b = ((index - (index % 3) - (9 * (r % 3))) / 9) + c / 3
       fill_square(index, r, c, b) if square.zero?
     end
+    p @grid
   end
 end
