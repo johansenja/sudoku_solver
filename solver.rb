@@ -25,6 +25,7 @@ class Sudoku
   def box(box_index)
     start = (3 * (box_index % 3)) + ((27 * box_index / 3) *
             box_index / 3)
+    # start = (3 * (box_index % 3)) + (3 * box_index * box_index)
     @grid.select.with_index do |num, index|
       num if index == start || index == start + 1 || index == start + 2 ||
              index == start + 9 || index == start + 10 || index == start + 11 ||
@@ -33,6 +34,7 @@ class Sudoku
   end
 
   def number_can_go_in_square?(number, row_index, col_index, box_index)
+    # binding.pry
     return false if row(row_index).include?(number) ||
                     column(col_index).include?(number) ||
                     box(box_index).include?(number)
