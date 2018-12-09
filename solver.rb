@@ -6,6 +6,7 @@ class Sudoku
   end
 
   def zeroes
+    # h = [] make this into an array of indices instead
     h = {}
     @grid.each_with_index { |e, i| h[i] = e if e.zero? }
     return h
